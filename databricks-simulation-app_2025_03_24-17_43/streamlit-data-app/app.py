@@ -74,21 +74,21 @@ st.write(f"You selected: {selected_question}")
 
 if st.button("Get Answer"):
     try:
-        # response = w.serving_endpoints.query(name=selected_model, messages=[
-        #         ChatMessage(
-        #             role=ChatMessageRole.SYSTEM,
-        #             content="You are a helpful assistant. Only answer questions related to Databricks and for all other questions respond saying you are not aware.",
-        #         ),
-        #         ChatMessage(
-        #             role=ChatMessageRole.USER,
-        #             content=selected_question,
-        #         ),
-        #     ],
-        #     temperature=temperature)
-        response = score_model()
+        response = w.serving_endpoints.query(name=selected_model, messages=[
+                ChatMessage(
+                    role=ChatMessageRole.SYSTEM,
+                    content="You are a helpful assistant. Only answer questions related to Databricks and for all other questions respond saying you are not aware.",
+                ),
+                ChatMessage(
+                    role=ChatMessageRole.USER,
+                    content=selected_question,
+                ),
+            ],
+            temperature=temperature)
+        # response = score_model()
         
-        # choices = response.as_dict().get("choices", [])
-        choices = response.get("messages", [])
+        choices = response.as_dict().get("choices", [])
+        # choices = response.get("messages", [])
         if choices:
             st.subheader("Model Response:")
             message_content = choices[0].get("message", {}).get("content", "")
